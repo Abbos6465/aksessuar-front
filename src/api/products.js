@@ -22,7 +22,7 @@ export function productCreate(data){
     })
 }
 
-export function productUpdate(id){
+export function productUpdate(id,data){
     return request({
         url: `/products/${id}`,
         method: 'put',

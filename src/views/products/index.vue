@@ -16,7 +16,7 @@ import {mapActions,mapState} from "vuex";
 import Loader from "@/components/Loader.vue";
 import ProductCard from "@/components/ProductCard.vue";
 export default {
-    
+    name:"ProductIndex",
     computed:{
         ...mapState({
             isLoading: state => state.product.isLoading,

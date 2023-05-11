@@ -89,12 +89,13 @@ export const actions = {
         })
     },
 
-    productUpdate({commit},data){
-        return console.log(data);
+    productUpdate({commit},{id,product}){
         return new Promise((resolve,reject)=>{
+            console.log(product);
             commit('updateProductStart');
-            this.productUpdate(data.product,data.id)
+            productUpdate(id,product)
             .then(res=>{
+                console.log(res);
                 commit("updateProductSuccess");
                 resolve(res);
             })

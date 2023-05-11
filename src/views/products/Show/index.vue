@@ -1,6 +1,6 @@
 <template>
-    <Loader v-if="!product"/>
-    <div class="container pt-5" v-else>
+    <Loader v-if="this.isLoader"/>
+    <div class="container pt-5" v-if="this.product">
         <div>
             <img src="" alt="product img" width="1000">
             <div class="mt-5 d-flex align-items-center justify-content-between">
@@ -19,6 +19,7 @@ import { mapActions,mapState } from 'vuex';
 import Loader from "@/components/Loader.vue"
 
 export default {
+    name:"ProductShow",
 
     components:{
         Loader
@@ -29,6 +30,7 @@ export default {
                 product: state => state.product.productDetail,
                 categories: state => state.product.categories,
                 brands: state => state.product.brands,
+                isLoading: state => state.product.isLoading
             })
         },
 
