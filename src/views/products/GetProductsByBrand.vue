@@ -3,6 +3,7 @@
         <div class="container">
             <Loader v-if="isLoading" />
                 <div class="row" v-if="this.data && data.length > 0">
+                    <h1 class="text-primary mb-5 fw-bold">Barcha mahsulotlar</h1>
                     <ProductCard v-for="product in data" :product="product" :key="product.id" class="col-4 d-flex mb-4" />
                     <PaginateList :meta="this.meta"  />
                 </div>
