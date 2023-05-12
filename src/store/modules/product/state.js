@@ -1,5 +1,7 @@
 export const state = {
     data:null,
+    links:null,
+    meta:null,
     isLoading:false,
     error:null,
     productDetail:null,

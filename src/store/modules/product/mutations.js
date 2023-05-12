@@ -4,11 +4,15 @@ export const mutations = {
         state.data = null,
         state.error = null,
         state.productDetail = null
+        state.links = null,
+        state.meta = null
     },
 
     getProductsSuccess(state,payload){
         state.isLoading = false;
-        state.data = payload;
+        state.data = payload.data;
+        state.links = payload.links;
+        state.meta = payload.meta;
     },
 
     getProductsFailure(state){

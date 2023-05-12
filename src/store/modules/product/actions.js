@@ -1,107 +1,121 @@
-import { products,productShow,productCreate,productDelete,productUpdate,getProductsByCategory,getProductsByBrand } from "@/api/products"
+import { products, productShow, productCreate, productDelete, productUpdate, getProductsByCategory, getProductsByBrand, pageHandler } from "@/api/products"
 
 export const actions = {
-     products({commit},data){
-         return new Promise((resolve,reject)=>{
+    products({ commit }, data) {
+        return new Promise((resolve, reject) => {
             commit("getProductsStart");
             products()
-            .then((res)=>{
-                commit('getProductsSuccess',res.data);
-                resolve(res.data);
-            })
-            .catch(error=>{
-                commit("getProductsFailure");
-                console.log("Error",error);
-            })
+                .then((res) => {
+                    console.log(res);
+                    commit('getProductsSuccess', res);
+                    resolve(res);
+                })
+                .catch(error => {
+                    commit("getProductsFailure");
+                    console.log("Error", error);
+                })
         })
     },
 
-    getProductsByCategory({commit},id){
+   async getProductsByCategory({commit}, id) {
         commit("getProductsStart");
-        getProductsByCategory(id)
-        .then((res)=>{
-            commit('getProductsSuccess',res.data);
-            resolve(res.data);
-        })
-        .catch(error=>{
-            commit("getProductsFailure");
-            console.log("Error",error);
-        })
+        await getProductsByCategory(id)
+            .then((res) => {
+                commit('getProductsSuccess', res);
+                resolve(res);
+            })
+            .catch(error => {
+                commit("getProductsFailure");
+            })
     },
 
-    async getProductsByBrand({commit},id){
+    async getProductsByBrand({ commit }, id) {
         commit("getProductsStart");
         await getProductsByBrand(id)
-        .then((res)=>{
-            commit('getProductsSuccess',res.data);
-            resolve(res.data);
-        })
-        .catch(error=>{
-            commit("getProductsFailure");
-            console.log("Error",error);
-        })
+            .then((res) => {
+                commit('getProductsSuccess', res);
+                resolve(res);
+            })
+            .catch(error => {
+                commit("getProductsFailure");
+                console.log("Error", error);
+            })
     },
 
-   async productShow({commit},id){
-        return await new Promise((resolve,reject)=>{
+    async productShow({ commit }, id) {
+        return await new Promise((resolve, reject) => {
             commit('getProductDetailStart');
             productShow(id)
-            .then(res=>{
-                commit('getProductDetailSuccess',res.data);
-                resolve(res.data);
-            })
-            .catch(error=>{
-                commit("getProductDetailFailure");
-                reject(error);
-            })
+                .then(res => {
+                    commit('getProductDetailSuccess', res.data);
+                    resolve(res.data);
+                })
+                .catch(error => {
+                    commit("getProductDetailFailure");
+                    reject(error);
+                })
         })
     },
 
-    productDelete({commit},id){
-        return new Promise((resolve,reject)=>{
+    productDelete({ commit }, id) {
+        return new Promise((resolve, reject) => {
             commit('deleteProductStart');
             productDelete(id)
-            .then(res=>{
-                commit('deleteProductSuccess');
+                .then(res => {
+                    commit('deleteProductSuccess');
 
-                resolve(res);
-            })
-            .catch(err=>{
-                commit('deleteProductFailure',err.data);
-                reject(err)
-            })
+                    resolve(res);
+                })
+                .catch(err => {
+                    commit('deleteProductFailure', err.data);
+                    reject(err)
+                })
         })
     },
 
-    productCreate({commit},data){
-        return new Promise((resolve,reject)=>{
+    productCreate({ commit }, data) {
+        return new Promise((resolve, reject) => {
             commit("createProductStart");
             productCreate(data)
-            .then(res=>{
-                console.log(res.data);
-                commit("createProductSuccess");
-                resolve(res.data);
-            })
-            .catch(err=>{
-                commit("createProductFailure");
-                reject(err)
-            })
+                .then(res => {
+                    console.log(res.data);
+                    commit("createProductSuccess");
+                    resolve(res.data);
+                })
+                .catch(err => {
+                    commit("createProductFailure");
+                    reject(err)
+                })
         })
     },
 
-    productUpdate({commit},{id,product}){
-        return new Promise((resolve,reject)=>{
+    productUpdate({ commit }, { id, product }) {
+        return new Promise((resolve, reject) => {
             console.log(product);
             commit('updateProductStart');
-            productUpdate(id,product)
-            .then(res=>{
-                console.log(res);
-                commit("updateProductSuccess");
-                resolve(res);
-            })
-            .catch(err=>{
-                reject(err);
-            })
+            productUpdate(id, product)
+                .then(res => {
+                    console.log(res);
+                    commit("updateProductSuccess");
+                    resolve(res);
+                })
+                .catch(err => {
+                    reject(err);
+                })
+        })
+    },
+
+    pageHandler({ commit }, { url, pageNumber }) {
+        return new Promise((resolve, reject) => {
+            commit("getProductsStart");
+            pageHandler(url, pageNumber)
+                .then(res => {
+                    commit("getProductsSuccess", res);
+                    resolve(res);
+                })
+                .catch(err => {
+                    reject(err)
+                })
         })
     }
 }

@@ -2,12 +2,13 @@
     <div class="album py-5 bg-body-tertiary">
         <div class="container">
             <Loader v-if="isLoading" />
-            <div class="row" v-else>
-                    <ProductCard v-if="this.data && data.length>0" v-for="product in data" :product="product" :key="product.id" class="col-4 d-flex mb-4"  />
-                <h2 v-else class="text-danger not_data d-flex align-items-center justify-content-center">
+                <div class="row" v-if="this.data && data.length > 0">
+                    <ProductCard v-for="product in data" :product="product" :key="product.id" class="col-4 d-flex mb-4" />
+                    <PaginateList :meta="this.meta"  />
+                </div>
+                <h2 v-if="this.data && data.length==0" class="text-danger not_data d-flex align-items-center justify-content-center">
                     Hozirda mahsulot mavjud emas
                 </h2>
-            </div>
         </div>
     </div>
 </template>
@@ -15,12 +16,14 @@
 import {mapActions,mapState} from "vuex";
 import Loader from "@/components/Loader.vue";
 import ProductCard from "@/components/ProductCard.vue";
+import PaginateList from "@/components/PaginateList.vue";
 export default {
     
     computed:{
         ...mapState({
             isLoading: state => state.product.isLoading,
             data: state => state.product.data,
+            meta : state => state.product.meta
         })
     },
     
@@ -32,11 +35,13 @@ export default {
     mounted() {
         this.getProductsByCategory(this.$route.params.id)
             .then(res => {
+              
         })
             .catch(err => {
+                console.log("Error",err);
         });
     },
-    components: { Loader,ProductCard }
+    components: { Loader, ProductCard, PaginateList }
 }
 </script>
 <style scoped>

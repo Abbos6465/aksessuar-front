@@ -1,2 +1,1 @@
-1.Paginate Link ni tayyorlash kerak
 2.Rasm tayyor emas
